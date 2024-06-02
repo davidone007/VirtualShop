@@ -1,4 +1,4 @@
-# Online Store Project
+# Ecomerce Node.js
 
 This project is a web application for an online store developed with Node.js. It allows administrators to add products and users to create accounts to access the store and add products to their cart. The project was collaboratively developed using the Live Share extension of Visual Studio Code.
 
@@ -8,6 +8,7 @@ This project is a web application for an online store developed with Node.js. It
 - **Nicolas Cuellar**
 - **Daron Mercado**
 - **Miguel Angel Martinez**
+- **Andres Felipe Cabezas**
 
 ## Features
 
@@ -42,14 +43,14 @@ This project is a web application for an online store developed with Node.js. It
 1. Clone the repository to your local machine:
 
    ```sh
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
+   https://github.com/davidone007/VirtualShop.git
+   cd VirtualShop
    ```
 
 2. Install the necessary dependencies:
 
    ```sh
-   npm install express
+   npm install express body-parser
    ```
 
 ## Configuration
@@ -70,7 +71,7 @@ The server will be running at `http://localhost:3000`.
 
 ### Login
 
-1. Navigate to `http://localhost:3000/login`.
+1. Write in your console `start src/client/html/login.html`.
 2. Log in with the following credentials:
 
    - **Admin User:**
