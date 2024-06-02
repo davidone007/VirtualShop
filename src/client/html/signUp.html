@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="backgroundImage"></div>
+
+    <div id="content" class="container">
+        <img class="logo" src="../images/carrito.jpg" alt="Logo">
+        <h2>Crear Cuenta</h2>
+        
+        <form id="signUpForm">
+            <div class="input-group">
+                <i class='bx bxs-user icon'></i>
+                <input type="text" id="fullName" placeholder="Full Name" name="fullName">
+            </div>
+            <div class="input-group">
+                <i class='bx bxs-id-card icon'></i>
+                <input type="text" id="username" placeholder="Id" name="cedula">
+            </div>
+            <div class="input-group">
+                <i class='bx bxs-envelope icon'></i>
+                <input type="email" id="email" placeholder="Email" name="email">
+            </div>
+            <div class="input-group">
+                <i class='bx bxs-key icon'></i>
+                <input type="password" id="password" placeholder="Password" name="password">
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+    
+        <p id="error"></p>
+    </div>
+    
+    <script src="../js/register.js"></script>
+</body>
+</html>

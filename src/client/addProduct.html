@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+	<link rel="stylesheet" href="./css/addProduct.css">
+</head>
+<body>
+	<div id="container">
+		<h1>Add Product</h1>
+		<form id="productForm">
+			<label for="name">Product's Name:</label><br>
+			<input type="text" id="name" name="name" required><br><br>
+
+			<label for="description">Description:</label><br>
+			<textarea id="description" name="description" required></textarea><br><br>
+
+			<label for="price">Price ($$):</label><br>
+			<input type="number" id="price" name="price" min="0" step="0.01" required><br><br>
+
+			<label for="stock">Stock:</label><br>
+			<input type="number" id="stock" name="stock" min="0" required><br><br>
+
+			<label for="imageUrl">image URL:</label><br>
+			<!--<input type="url" id="imageUrl" name="imageUrl" required><br><br>-->
+			<input type="file" id="imageUrl" name="image" accept="image/*" required><br><br>
+
+
+			<button type="submit">Summit</button>
+		</form>
+
+		<script src="./controllers/productsController.js"></script>
+	</div>
+</body>
+</html>
