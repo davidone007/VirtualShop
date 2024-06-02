@@ -31,6 +31,8 @@ document.getElementById('userForm').addEventListener('submit', function(event) {
     .then(data => {
         if (data.message == 'TRUE') {
             window.location.href = "../index.html";
+        }else if(data.message == 'TRUE_ADMIN' ){
+            window.location.href = "../addProduct.html";
         } else{
             document.getElementById('error').innerHTML = "Invalid credentials";
         }

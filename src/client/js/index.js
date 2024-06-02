@@ -25,7 +25,7 @@ fetch('http://localhost:3000/products')
             productElement.innerHTML = `
             <div class="product-entry border">
             <a href="#" class="prod-img">
-                <img src="${product.imageUrl}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                <img src="${product.imageUrl}" class="img-fluid" alt="Free html5 bootstrap 4 template" style="width: 200px; height: 200px; object-fit: cover;">
             </a>
             <div class="desc">
                 <h2><a href="#">${product.name}</a></h2>
@@ -82,10 +82,17 @@ async function addToCart(id, name, description, price, stock, imageUrl) {
         });
         const result = await response.json();
         console.log('Product added to cart:', result);
+            console.log('Success:', result);
+            alert('Product added to cart!');
+        
     } catch (error) {
         console.error('Error adding product to cart:', error);
     }
 }
+
+document.getElementById('logout').addEventListener('click', function() {
+    window.location.href = 'html/login.html'; 
+});
 
     /*
 fetch('http://localhost:3000/products')
