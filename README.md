@@ -51,6 +51,7 @@ This project is a web application for an online store developed with Node.js. It
 
    ```sh
    npm install express body-parser
+   npm install cors
    ```
 
 ## Configuration
