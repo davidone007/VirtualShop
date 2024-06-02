@@ -13,14 +13,14 @@
 */
 
 
-// POST
+// src/client/js/login.js
 document.getElementById('userForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('http://localhost:3000', {
+    fetch('http://localhost:3000/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -29,11 +29,10 @@ document.getElementById('userForm').addEventListener('submit', function(event) {
     })
     .then(response => response.json())
     .then(data => {
-        // Cambia el contenido del contenedor
         if (data.message == 'TRUE') {
             window.location.href = "../index.html";
         } else{
-            document.getElementById('error').innerHTML = "Credenciales inválidas";
+            document.getElementById('error').innerHTML = "Invalid credentials";
         }
     })
     .catch((error) => {

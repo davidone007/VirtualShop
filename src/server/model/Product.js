@@ -8,11 +8,13 @@ class Product {
      * @param {number} price - The price of the product.
      * @param {string} imageUrl - The URL of the product image.
      */
-    constructor(name, description, price, stock, imageUrl) {
+    constructor(id, name, description, price, stock, imageUrl) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
+        this.quantity = 0;
         this.imageUrl = imageUrl;
     }
 }

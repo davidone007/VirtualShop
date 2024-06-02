@@ -9,7 +9,7 @@
 <body>
 	<div id="container">
 		<h1>Add Product</h1>
-		<form id="productForm">
+		<form id="productForm" enctype="multipart/form-data">
 			<label for="name">Product's Name:</label><br>
 			<input type="text" id="name" name="name" required><br><br>
 
@@ -22,10 +22,9 @@
 			<label for="stock">Stock:</label><br>
 			<input type="number" id="stock" name="stock" min="0" required><br><br>
 
-			<label for="imageUrl">image URL:</label><br>
+			<label for="image">Upload Image:</label><br>
+        	<input type="file" id="image" name="image" required><br><br>
 			<!--<input type="url" id="imageUrl" name="imageUrl" required><br><br>-->
-			<input type="file" id="imageUrl" name="image" accept="image/*" required><br><br>
-
 
 			<button type="submit">Summit</button>
 		</form>

@@ -3,20 +3,31 @@ import express from 'express';
 import multer from 'multer';
 import Product from './model/Product.js';
 
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 const app = express();
 const port = 3000;
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '../client/images') //Ruta
+
+cloudinary.config({     
+  cloud_name: 'dxjxgmxq5', 
+  api_key: '933861423669761', 
+  api_secret: 'KlqQarLzMmniE3FT75SAGuUZ4_Y' 
+});
+
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'products', // Carpeta en Cloudinary donde se guardarán las imágenes
+        format: async (req, file) => 'png', // Formato de la imagen
+        public_id: (req, file) => Date.now() + '-' + file.originalname // Nombre único para evitar conflictos
     },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
 });
 
 const upload = multer({ storage: storage });
+
 
 
 // In-memory user list
@@ -30,22 +41,6 @@ let cart=[];
 app.use(express.json());
 app.use(cors());
 
-// Endpoint para agregar un producto y subir una imagen
-app.post('/products', upload.single('image'), (req, res) => {
-    const { name, description, price, stock } = req.body;
-    const imageUrl = `/images/${req.file.filename}`;
-
-    if (!name || !description || !price || !stock || !req.file) {
-        console.log("Missing fields");
-        return res.status(400).json({ error: 'All fields are required' });
-    }
-
-    const product = new Product(name, description, price, stock, imageUrl);
-    products.push(product);
-    console.log("Added");
-    console.log(products);
-    res.json(product);
-});
 
 // Start server
 app.listen(port, () => {
@@ -56,34 +51,35 @@ app.listen(port, () => {
 
 
 
-// Login
-app.get('/', (req, res) => {
-    res.json({"message": "Inicio de sesión"});
-});
-
-// Ruta para procesar el inicio de sesión
+// Route to process login
 app.post('/', (req, res) => {
     const { username, password } = req.body;
 
-    // Aquí puedes realizar la lógica de autenticación, como verificar las credenciales en una base de datos
+    // Check if the user exists in the users array
+    const user = users.find(user => user.username === username);
 
-    // Ejemplo de verificación de credenciales
-    if (username === 'admin' && password === 'admin') {
-        // Si las credenciales son válidas, redirige al usuario a la página de inicio
-        res.json({ message: 'TRUE' });
+    if (user) {
+        // If the user exists, check if the passwords match
+        if (user.password === password) {
+            // If the passwords match, send a success message
+            res.json({ message: 'TRUE' });
+        } else {
+            // If the passwords don't match, send an error message
+            res.json({ message: 'FALSE', error: 'Invalid password' });
+        }
     } else {
-        // Si las credenciales son inválidas, muestra un mensaje de error
-        res.json({ message: 'FALSE' });
+        // If the user doesn't exist, send an error message
+        res.json({ message: 'FALSE', error: 'User does not exist' });
     }
 });
 
 // Endpoint to register a new client
 app.post('/signup', (req, res) => {
-    const { fullName, username, email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!fullName || !username || !email || !password) {
+    if (!username || !password) {
         console.log("Missing fields")
-        return res.status(400).json({ error: 'All fields are required' });
+        return res.status(400).json({ error: 'Both username and password are required' });
     }
 
     // Check if the user already exists
@@ -93,30 +89,45 @@ app.post('/signup', (req, res) => {
         return res.status(400).json({ error: 'Username already exists' });
     }
 
-    const user = { fullName, username, email, password };
+    const user = { username, password };
     users.push(user);
     console.log("User registered");
     console.log(users);
     res.json(user);
 });
 
+// Endpoint para agregar un producto y subir una imagen a Cloudinary
+app.post('/products', upload.single('image'), (req, res) => {
+    const { name, description, price, stock, imageUrl} = req.body;
+    image = req.file.path; // URL de la imagen en Cloudinary
 
-
-// Endpoint to get the list of users
-app.get('/products', (req, res) => {
-    res.json(products);
-});
-
-// Agregar nuevo producto
-app.post('/products', (req, res) => {
-    const { name, description, price, stock, imageUrl } = req.body;
-
-    if (!name || !description || !price || !stock || !imageUrl) {
-        console.log("Missing fields")
+    if (!name || !description || !price || !stock || !req.file) {
+        console.log("Missing fields");
         return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const product = new Product(name, description, price, stock, imageUrl);
+    let id = products.length;
+
+    const product = new Product(id, name, description, price, stock, image);
+    products.push(product);
+    console.log("Added");
+    console.log(products);
+    res.json(product);
+});
+
+
+//Cart
+
+// Endpoint to get the list of products of cart
+app.get('/cart', (req, res) => {
+    res.json(cart);
+});
+
+// Add a product in the cart
+app.post('/cart', (req, res) => {
+    const { id, name, description, price, stock, imageUrl } = req.body;
+
+    const product = new Product(id, name, description, price, stock, imageUrl);
     products.push(product);
     console.log("Added");
     console.log(products);

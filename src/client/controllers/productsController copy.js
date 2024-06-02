@@ -12,7 +12,7 @@ document.getElementById('productForm').addEventListener('submit', function(event
 
     fetch('http://localhost:3000/products', {
         method: 'POST',
-        body: JSON.stringify({ name, description, price, stock, imageFile }),
+        body: JSON.stringify({ name, description, price, stock }),
     })
     .then(response => response.json())
     .then(result => {

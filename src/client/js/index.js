@@ -24,16 +24,33 @@ fetch('http://localhost:3000/products')
 
             productElement.innerHTML = `
             <div class="product-entry border">
-							<a href="#" class="prod-img">
-								<img src="${product.imageUrl}" class="img-fluid" alt="Free html5 bootstrap 4 template">
-							</a>
-							<div class="desc">
-								<h2><a href="#">${product.name}</a></h2>
-								<span class="price">$${product.price}</span>
-                                <span class="descripttion">${product.description}</span>
-							</div>
-						</div>
+            <a href="#" class="prod-img">
+                <img src="${product.imageUrl}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+            </a>
+            <div class="desc">
+                <h2><a href="#">${product.name}</a></h2>
+                <span class="price">$${product.price}</span>
+                <span class="description">${product.description}</span>
+                <br>
+                <button class="add-to-cart" style="
+                    background-color: #4CAF50; /* Green */
+                    border: none;
+                    color: white;
+                    padding: 15px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                ">Add to Cart</button>
+            </div>
+        </div>
             `;
+
+            productElement.querySelector('.add-to-cart').addEventListener('click', () => {
+                addToCart(product.id, product.name, product.description, product.price, product.stock, product.imageUrl);
+            });
 
             productsContainer.appendChild(productElement);
 
@@ -44,6 +61,31 @@ fetch('http://localhost:3000/products')
         console.error('Error:', error);
     });
 
+/*Agregar al carrito */ 
+
+
+document.getElementById('logout').addEventListener('click', function() {
+    window.location.href = 'login.html'; 
+});
+
+
+
+
+async function addToCart(id, name, description, price, stock, imageUrl) {
+    try {
+        const response = await fetch('http://localhost:3000/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id, name, description, price, stock, imageUrl })
+        });
+        const result = await response.json();
+        console.log('Product added to cart:', result);
+    } catch (error) {
+        console.error('Error adding product to cart:', error);
+    }
+}
 
     /*
 fetch('http://localhost:3000/products')
